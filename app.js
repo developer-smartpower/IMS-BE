@@ -19,9 +19,12 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 var indexRouter = require("./routes/index");
+const authRouter = require("./src/modules/auth/auth.router");
 const productRouter = require("./src/modules/products/products.router");
 
 app.use("/", indexRouter);
+
+app.use("/auth", authRouter);
 app.use("/products", productRouter);
 
 // catch 404 and forward to error handler

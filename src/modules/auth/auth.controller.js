@@ -2,9 +2,9 @@ const responseHandler = require("../../utils/ResponseHandler");
 const authService = require("./auth.service");
 
 const signIn = async (req, res, next) => {
-  const {} = req.body;
+  const { username, password } = req.body;
   try {
-    const response = await authService.signIn();
+    const response = await authService.signIn(username, password);
     responseHandler(res, response, "success", 200);
   } catch (err) {
     next(err);
@@ -12,39 +12,42 @@ const signIn = async (req, res, next) => {
 };
 
 const signUp = async (req, res, next) => {
-  const {} = req.body;
+  const { fullname, username, password } = req.body;
   try {
-    const response = await authService.signUp();
-    responseHandler(res, response, "success", 200);
+    await authService.signUp(fullname, username, password);
+    responseHandler(res, {}, "success", 200);
   } catch (err) {
     next(err);
   }
 };
 
 const signOut = async (req, res, next) => {
-  const {} = req.body;
+  const { user_id } = req;
   try {
-    const response = await authService.signOut();
-    responseHandler(res, response, "success", 200);
+    await authService.signOut(user_id);
+    responseHandler(res, {}, "success", 200);
   } catch (err) {
     next(err);
   }
 };
 
 const getProfileDetails = async (req, res, next) => {
-  const {} = req.body;
+  const { user_id } = req;
+  console.log("kjahskjhsadjkhs", req);
   try {
-    const response = await authService.getProfileDetails();
+    const response = await authService.getProfileDetails(user_id);
     responseHandler(res, response, "success", 200);
   } catch (err) {
     next(err);
   }
 };
 
-const getTokens = async (req, res, next) => {
-  const {} = req.body;
+const getNewTokens = async (req, res, next) => {
+  const { refresh_token } = req.body;
+  const { user_id } = req;
+
   try {
-    const response = await authService.getTokens();
+    const response = await authService.getNewTokens(user_id, refresh_token);
     responseHandler(res, response, "success", 200);
   } catch (err) {
     next(err);
@@ -56,5 +59,5 @@ module.exports = {
   signUp,
   signOut,
   getProfileDetails,
-  getTokens,
+  getNewTokens,
 };
