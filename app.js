@@ -20,12 +20,20 @@ app.use(cors());
 
 var indexRouter = require("./routes/index");
 const authRouter = require("./src/modules/auth/auth.router");
+const userManangementRouter = require("./src/modules/userManangement/userManangement.router");
+const supplierRouter = require("./src/modules/suppliers/suppliers.router");
 const productRouter = require("./src/modules/products/products.router");
+const purchaseRouter = require("./src/modules/purchases/purchases.router");
+const stockRouter = require("./src/modules/stock/stock.router");
 
 app.use("/", indexRouter);
 
 app.use("/auth", authRouter);
+app.use("/users", userManangementRouter);
+app.use("/suppliers", supplierRouter);
 app.use("/products", productRouter);
+app.use("/purchases", purchaseRouter);
+app.use("/stocks", stockRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

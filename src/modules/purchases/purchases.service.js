@@ -1,33 +1,19 @@
 const AppError = require("../../utils/AppError");
 const purchaseModel = require("./purchases.model");
 
-const addPurchase = async () => {
+const addPurchase = async (
+  product_id,
+  supplier_id,
+  quantity,
+  purchase_price
+) => {
   try {
-    const response = await purchaseModel.addPurchase();
-    return response;
-  } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
-    throw new AppError();
-  }
-};
-
-const getPurchaseDetails = async () => {
-  try {
-    const response = await purchaseModel.getPurchaseDetails();
-    return response;
-  } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
-    throw new AppError();
-  }
-};
-
-const updatePurchaseDetails = async () => {
-  try {
-    const response = await purchaseModel.updatePurchaseDetails();
+    const response = await purchaseModel.addPurchase(
+      product_id,
+      supplier_id,
+      quantity,
+      purchase_price
+    );
     return response;
   } catch (err) {
     if (err instanceof AppError) {
@@ -49,9 +35,21 @@ const getPurchaseList = async () => {
   }
 };
 
-const deletePurchaseItem = async () => {
+const getPurchaseDetails = async (purchase_id) => {
   try {
-    const response = await purchaseModel.deletePurchaseItem();
+    const response = await purchaseModel.getPurchaseDetails(purchase_id);
+    return response;
+  } catch (err) {
+    if (err instanceof AppError) {
+      throw err;
+    }
+    throw new AppError();
+  }
+};
+
+const updatePurchaseDetails = async (purchase_id) => {
+  try {
+    const response = await purchaseModel.updatePurchaseDetails(purchase_id);
     return response;
   } catch (err) {
     if (err instanceof AppError) {
@@ -66,5 +64,4 @@ module.exports = {
   getPurchaseDetails,
   updatePurchaseDetails,
   getPurchaseList,
-  deletePurchaseItem,
 };

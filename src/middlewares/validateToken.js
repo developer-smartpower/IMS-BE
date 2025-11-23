@@ -10,7 +10,6 @@ const validateToken = (req, res, next) => {
     if (err) return res.status(403);
 
     req.user_id = data.user_id;
-    console.log("lkajsdkjlaskjd", req);
 
     next();
   });

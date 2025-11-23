@@ -1,19 +1,33 @@
 const db = require("../../config/db");
 
-const addStock = async () => {
+const addStock = async (
+  product_id,
+  quantity_in_stock,
+  reorder_level,
+  unit_of_measure,
+  location,
+  batch_number,
+  expiry_date
+) => {
   const query =
-    "INSERT INTO stocks (product_id, remaining_quanity) VALUES ($1, $2)";
-  const values = [product_id, remaining_quanity];
+    "INSERT INTO stocks (product_id, quantity_in_stock, reorder_level, unit_of_measure, location, batch_number) VALUES ($1, $2, $3, $4, $5, $6)";
+  const values = [
+    product_id,
+    quantity_in_stock,
+    reorder_level,
+    unit_of_measure,
+    location,
+    batch_number,
+  ];
 
   return await db.query(query, values);
 };
 
 const getStockList = async () => {
   const query = "SELECT * FROM stocks";
-  const values = [];
 
-  const response = await db.query(query, values);
-  return response.rows[0];
+  const response = await db.query(query);
+  return response.rows;
 };
 
 const viewStockDetails = async (stock_id) => {

@@ -5,13 +5,13 @@ const addProduct = async (req, res, next) => {
   const { name, description, unit_price, manufacturer } = req.body;
 
   try {
-    const response = await productService.addProduct(
+    await productService.addProduct(
       name,
       description,
       unit_price,
       manufacturer
     );
-    responseHandler(res, (data = null), (message = "Success"), (status = 200));
+    responseHandler(res, {}, "Success", 200);
   } catch (err) {
     console.log("aslkhjdksjadkl", err);
 

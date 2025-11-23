@@ -2,20 +2,14 @@ const responseHandler = require("../../utils/ResponseHandler");
 const authService = require("./auth.service");
 
 const signIn = async (req, res, next) => {
-  const { username, password } = req.body;
+  const { mobile_number, password, device_id } = req.body;
   try {
-    const response = await authService.signIn(username, password);
+    const response = await authService.signIn(
+      mobile_number,
+      password,
+      device_id
+    );
     responseHandler(res, response, "success", 200);
-  } catch (err) {
-    next(err);
-  }
-};
-
-const signUp = async (req, res, next) => {
-  const { fullname, username, password } = req.body;
-  try {
-    await authService.signUp(fullname, username, password);
-    responseHandler(res, {}, "success", 200);
   } catch (err) {
     next(err);
   }
@@ -33,7 +27,6 @@ const signOut = async (req, res, next) => {
 
 const getProfileDetails = async (req, res, next) => {
   const { user_id } = req;
-  console.log("kjahskjhsadjkhs", req);
   try {
     const response = await authService.getProfileDetails(user_id);
     responseHandler(res, response, "success", 200);
@@ -54,9 +47,33 @@ const getNewTokens = async (req, res, next) => {
   }
 };
 
+const forgotPassword = async (req, res, next) => {
+  const { user_id } = req;
+
+  try {
+    await authService.forgotPassword(user_id);
+    responseHandler(res, {}, "success", 200);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const resetPassword = async (req, res, next) => {
+  const { user_id } = req;
+  const { old_password, new_password } = req.body;
+
+  try {
+    await authService.resetPassword(user_id, old_password, new_password);
+    responseHandler(res, {}, "success", 200);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   signIn,
-  signUp,
+  forgotPassword,
+  resetPassword,
   signOut,
   getProfileDetails,
   getNewTokens,

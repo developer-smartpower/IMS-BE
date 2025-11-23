@@ -2,11 +2,19 @@ const express = require("express");
 const router = express.Router();
 
 const purchaseController = require("./purchases.controller");
+const validateToken = require("../../middlewares/validateToken");
 
-router.post("/add", purchaseController.addPurchase);
-router.get("/details/:purchase_id", purchaseController.getPurchaseDetails);
-router.post("/update/:purchase_id", purchaseController.updatePurchaseDetails);
-router.post("/list", purchaseController.getPurchaseList);
-router.post("/delete/:purchase_id", purchaseController.deletePurchaseItem);
+router.post("/", validateToken, purchaseController.addPurchase);
+router.post("/", validateToken, purchaseController.getPurchaseList);
+router.get(
+  "/:purchase_id",
+  validateToken,
+  purchaseController.getPurchaseDetails
+);
+router.post(
+  "/:purchase_id",
+  validateToken,
+  purchaseController.updatePurchaseDetails
+);
 
 module.exports = router;

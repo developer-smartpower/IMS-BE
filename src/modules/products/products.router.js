@@ -2,11 +2,15 @@ const express = require("express");
 const router = express.Router();
 
 const productController = require("./products.controller");
+const validateToken = require("../../middlewares/validateToken");
 
-router.post("/add", productController.addProduct);
-router.put("/update/:product_id", productController.updateProductDetails);
-router.get("/details/:product_id", productController.getProductDetails);
-router.get("/delete/:product_id", productController.deleteProduct);
-router.get("/list", productController.getProductList);
+router.post("/", validateToken, productController.addProduct);
+router.put(
+  "/:product_id",
+  validateToken,
+  productController.updateProductDetails
+);
+router.get("/:product_id", validateToken, productController.getProductDetails);
+router.get("/", validateToken, productController.getProductList);
 
 module.exports = router;

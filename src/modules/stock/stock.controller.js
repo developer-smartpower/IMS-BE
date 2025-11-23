@@ -3,8 +3,24 @@ const stockService = require("./stock.service");
 
 const addStock = async (req, res, next) => {
   try {
-    const { product_id, remaining_quanity } = req.body;
-    const response = await stockService.addStock(product_id, remaining_quanity);
+    const {
+      product_id,
+      quantity_in_stock,
+      reorder_level,
+      unit_of_measure,
+      location,
+      batch_number,
+      expiry_date,
+    } = req.body;
+    await stockService.addStock(
+      product_id,
+      quantity_in_stock,
+      reorder_level,
+      unit_of_measure,
+      location,
+      batch_number,
+      expiry_date
+    );
     responseHandler(res, {}, "sucess", 200);
   } catch (err) {
     next(err);
@@ -15,7 +31,7 @@ const getStockList = async (req, res, next) => {
   try {
     const {} = req.body;
     const response = await stockService.getStockList();
-    responseHandler(res, {}, "sucess", 200);
+    responseHandler(res, response, "sucess", 200);
   } catch (err) {
     next(err);
   }
@@ -25,7 +41,7 @@ const viewStockDetails = async (req, res, next) => {
   try {
     const { stock_id } = req.params;
     const response = await stockService.viewStockDetails(stock_id);
-    responseHandler(res, {}, "success", 200);
+    responseHandler(res, response, "success", 200);
   } catch (err) {
     next(err);
   }

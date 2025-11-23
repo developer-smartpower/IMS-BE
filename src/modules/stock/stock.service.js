@@ -1,9 +1,25 @@
 const AppError = require("../../utils/AppError");
 const stockModel = require("./stock.model");
 
-const addStock = async (product_id, remaining_quanity) => {
+const addStock = async (
+  product_id,
+  quantity_in_stock,
+  reorder_level,
+  unit_of_measure,
+  location,
+  batch_number,
+  expiry_date
+) => {
   try {
-    const response = await stockModel.addStock(product_id, remaining_quanity);
+    const response = await stockModel.addStock(
+      product_id,
+      quantity_in_stock,
+      reorder_level,
+      unit_of_measure,
+      location,
+      batch_number,
+      expiry_date
+    );
     return response;
   } catch (err) {
     if (err instanceof AppError) {

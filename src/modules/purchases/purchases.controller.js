@@ -2,29 +2,14 @@ const responseHandler = require("../../utils/ResponseHandler");
 const purchaseService = require("./purchases.service");
 
 const addPurchase = async (req, res, next) => {
-  const {} = req.body;
+  const { product_id, supplier_id, quantity, purchase_price } = req.body;
   try {
-    const response = await purchaseService.addPurchase();
-    responseHandler(res, null, "Success", 200);
-  } catch (err) {
-    next(err);
-  }
-};
-
-const getPurchaseDetails = async (req, res, next) => {
-  const {} = req.body;
-  try {
-    const response = await purchaseService.getPurchaseDetails();
-    responseHandler(res, null, "Success", 200);
-  } catch (err) {
-    next(err);
-  }
-};
-
-const updatePurchaseDetails = async (req, res, next) => {
-  const {} = req.body;
-  try {
-    const response = await purchaseService.updatePurchaseDetails();
+    await purchaseService.addPurchase(
+      product_id,
+      supplier_id,
+      quantity,
+      purchase_price
+    );
     responseHandler(res, null, "Success", 200);
   } catch (err) {
     next(err);
@@ -32,7 +17,6 @@ const updatePurchaseDetails = async (req, res, next) => {
 };
 
 const getPurchaseList = async (req, res, next) => {
-  const {} = req.body;
   try {
     const response = await purchaseService.getPurchaseList();
     responseHandler(res, null, "Success", 200);
@@ -41,10 +25,22 @@ const getPurchaseList = async (req, res, next) => {
   }
 };
 
-const deletePurchaseItem = async (req, res, next) => {
-  const {} = req.body;
+const getPurchaseDetails = async (req, res, next) => {
+  const { purchase_id } = req.params;
   try {
-    const response = await purchaseService.deletePurchaseItem();
+    const response = await purchaseService.getPurchaseDetails(purchase_id);
+    responseHandler(res, null, "Success", 200);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const updatePurchaseDetails = async (req, res, next) => {
+  const {} = req.body;
+  const { purchase_id } = req.params;
+
+  try {
+    const response = await purchaseService.updatePurchaseDetails(purchase_id);
     responseHandler(res, null, "Success", 200);
   } catch (err) {
     next(err);
@@ -56,5 +52,4 @@ module.exports = {
   getPurchaseDetails,
   updatePurchaseDetails,
   getPurchaseList,
-  deletePurchaseItem,
 };
