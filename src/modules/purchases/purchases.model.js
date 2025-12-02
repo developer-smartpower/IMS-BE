@@ -1,14 +1,25 @@
 const db = require("../../config/db");
 
 const addPurchase = async (
-  product_id,
   supplier_id,
-  quantity,
-  purchase_price
+  updated_by,
+  invoice_number,
+  invoice_date,
+  purchase_date,
+  total_amount,
+  notes
 ) => {
   const query =
-    "INSERT INTO purchases (product_id, supplier_id, quantity, purchase_price) VALUES ($1, $2, $3, $4)";
-  const values = [product_id, supplier_id, quantity, purchase_price];
+    "INSERT INTO purchases (supplier_id, updated_by, invoice_number, invoice_date, purchase_dat total_amount, notes) VALUES ($1, $2, $3, $4)";
+  const values = [
+    supplier_id,
+    updated_by,
+    invoice_number,
+    invoice_date,
+    purchase_date,
+    total_amount,
+    notes,
+  ];
 
   return await db.query(query, values);
 };
@@ -28,9 +39,28 @@ const getPurchaseDetails = async (purchase_id) => {
   return results.rows[0];
 };
 
-const updatePurchaseDetails = async () => {
-  const query = "";
-  const values = [];
+const updatePurchaseDetails = async (
+  purchase_id,
+  supplier_id,
+  user_id,
+  invoice_number,
+  invoice_date,
+  purchase_date,
+  total_amount,
+  notes
+) => {
+  const query =
+    "UPDATE purchases SET supplier_id = $2, updated_by = $3, invoice_number = $4, invoice_date = $5, purchase_date = $6, total_amount = $7, notes = $8 WHERE purchase_id = $1";
+  const values = [
+    purchase_id,
+    supplier_id,
+    user_id,
+    invoice_number,
+    invoice_date,
+    purchase_date,
+    total_amount,
+    notes,
+  ];
 
   const results = await db.query(query, values);
   return results;

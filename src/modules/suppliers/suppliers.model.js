@@ -1,15 +1,27 @@
 const db = require("../../config/db");
 
 const addSupplier = async (
-  name,
-  mobile_number,
   email,
   address,
-  partnership
+  partnership,
+  spoc_name,
+  company_name,
+  mobile_number,
+  landline,
+  updated_by
 ) => {
   const query =
-    "INSERT INTO suppliers (supplier_name, mobile_number, email, address, partnership ) VALUES ($1, $2, $3, $4, $5)";
-  const values = [name, mobile_number, email, address, partnership];
+    "INSERT INTO suppliers (email, address, partnership, spoc_name, company_name, mobile_number, landline, updated_by ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+  const values = [
+    email,
+    address,
+    partnership,
+    spoc_name,
+    company_name,
+    mobile_number,
+    landline,
+    updated_by,
+  ];
 
   return await db.query(query, values);
 };
@@ -17,24 +29,24 @@ const getSupplierList = async () => {
   const query = "SELECT * FROM suppliers";
   const values = [];
 
-  const response = await db.query(query, values);
-  return response.rows;
+  const results = await db.query(query, values);
+  return results.rows;
 };
 
 const getSupplierDetails = async (supplier_id) => {
   const query = "SELECT * FROM suppliers WHERE supplier_id = $1";
   const values = [supplier_id];
 
-  const response = await db.query(query, values);
-  return response.rows[0];
+  const results = await db.query(query, values);
+  return results.rows[0];
 };
 
 const updateSupplierDetails = async (supplier_id) => {
   const query = "";
   const values = [];
 
-  const response = await db.query(query, values);
-  return response;
+  const results = await db.query(query, values);
+  return results;
 };
 
 module.exports = {

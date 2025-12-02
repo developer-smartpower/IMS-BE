@@ -1,9 +1,23 @@
 const db = require("../../config/db");
 
-const addProduct = async (name, description, unit_price, manufacturer) => {
+const addProduct = async (
+  description,
+  name,
+  manufacturer,
+  supplier_id,
+  code_name,
+  updated_by
+) => {
   const query =
-    "INSERT INTO products (name, description, unit_price, manufacturer) VALUES ($1, $2, $3, $4)";
-  const values = [name, description, unit_price, manufacturer];
+    "INSERT INTO products (description, name, manufacturer, supplier_id, code_name, updated_by) VALUES ($1, $2, $3, $4, $5, $6)";
+  const values = [
+    description,
+    name,
+    manufacturer,
+    supplier_id,
+    code_name,
+    updated_by,
+  ];
 
   return await db.query(query, values);
 };

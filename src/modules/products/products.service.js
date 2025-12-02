@@ -1,17 +1,25 @@
 const AppError = require("../../utils/AppError");
 const productModel = require("./products.model");
 
-const addProduct = async (name, description, manufacturer, unit_price) => {
+const addProduct = async (
+  description,
+  name,
+  manufacturer,
+  supplier_id,
+  code_name,
+  updated_by
+) => {
   try {
     const response = await productModel.addProduct(
-      name,
       description,
+      name,
       manufacturer,
-      unit_price
+      supplier_id,
+      code_name,
+      updated_by
     );
     return response;
   } catch (err) {
-
     if (err instanceof AppError) {
       throw err;
     }

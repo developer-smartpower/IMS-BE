@@ -11,7 +11,7 @@ router.get(
   validateToken,
   purchaseController.getPurchaseDetails
 );
-router.post(
+router.put(
   "/:purchase_id",
   validateToken,
   purchaseController.updatePurchaseDetails

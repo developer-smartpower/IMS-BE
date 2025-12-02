@@ -2,23 +2,28 @@ const AppError = require("../../utils/AppError");
 const supplierModel = require("./suppliers.model");
 
 const addSupplier = async (
-  name,
-  mobile_number,
   email,
   address,
-  partnership
+  partnership,
+  spoc_name,
+  company_name,
+  mobile_number,
+  landline,
+  updated_by
 ) => {
   try {
     const response = await supplierModel.addSupplier(
-      name,
-      mobile_number,
       email,
       address,
-      partnership
+      partnership,
+      spoc_name,
+      company_name,
+      mobile_number,
+      landline,
+      updated_by
     );
     return response;
   } catch (err) {
-    console.log('alskdjklsajd', err)
     if (err instanceof AppError) {
       throw err;
     }

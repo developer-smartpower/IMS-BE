@@ -2,15 +2,27 @@ const responseHandler = require("../../utils/ResponseHandler");
 const supplierService = require("./suppliers.service");
 
 const addSupplier = async (req, res, next) => {
-  const { name, mobile_number, email, address, partnership } = req.body;
+  const {
+    email,
+    address,
+    partnership,
+    spoc_name,
+    company_name,
+    mobile_number,
+    landline,
+  } = req.body;
+  const user_id = req.user_id;
 
   try {
     await supplierService.addSupplier(
-      name,
-      mobile_number,
       email,
       address,
-      partnership
+      partnership,
+      spoc_name,
+      company_name,
+      mobile_number,
+      landline,
+      user_id
     );
     responseHandler(res, {}, "Success", 200);
   } catch (err) {

@@ -3,24 +3,9 @@ const stockService = require("./stock.service");
 
 const addStock = async (req, res, next) => {
   try {
-    const {
-      product_id,
-      quantity_in_stock,
-      reorder_level,
-      unit_of_measure,
-      location,
-      batch_number,
-      expiry_date,
-    } = req.body;
-    await stockService.addStock(
-      product_id,
-      quantity_in_stock,
-      reorder_level,
-      unit_of_measure,
-      location,
-      batch_number,
-      expiry_date
-    );
+    const { product_id, available_quantity } = req.body;
+    const user_id = req.user_id;
+    await stockService.addStock(product_id, available_quantity, user_id);
     responseHandler(res, {}, "sucess", 200);
   } catch (err) {
     next(err);

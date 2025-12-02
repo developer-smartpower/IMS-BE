@@ -2,19 +2,21 @@ const responseHandler = require("../../utils/ResponseHandler");
 const productService = require("./products.service");
 
 const addProduct = async (req, res, next) => {
-  const { name, description, unit_price, manufacturer } = req.body;
+  const { description, name, manufacturer, supplier_id, code_name } = req.body;
+  const user_id = req.user_id;
 
   try {
     await productService.addProduct(
-      name,
       description,
-      unit_price,
-      manufacturer
+      name,
+      manufacturer,
+      supplier_id,
+      code_name,
+      user_id
     );
+
     responseHandler(res, {}, "Success", 200);
   } catch (err) {
-    console.log("aslkhjdksjadkl", err);
-
     next(err);
   }
 };
@@ -31,12 +33,7 @@ const getProductDetails = async (req, res, next) => {
 
   try {
     const response = await productService.getProductDetails(product_id);
-    responseHandler(
-      res,
-      (data = response),
-      (message = "Success"),
-      (status = 200)
-    );
+    responseHandler(res, response, "Success", 200);
   } catch (err) {
     next(err);
   }

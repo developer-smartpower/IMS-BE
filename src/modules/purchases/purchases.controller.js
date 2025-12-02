@@ -2,13 +2,26 @@ const responseHandler = require("../../utils/ResponseHandler");
 const purchaseService = require("./purchases.service");
 
 const addPurchase = async (req, res, next) => {
-  const { product_id, supplier_id, quantity, purchase_price } = req.body;
+  const {
+    supplier_id,
+    invoice_number,
+    invoice_date,
+    purchase_date,
+    total_amount,
+    notes,
+    product_items,
+  } = req.body;
+  const user_id = req.user_id;
   try {
     await purchaseService.addPurchase(
-      product_id,
       supplier_id,
-      quantity,
-      purchase_price
+      user_id,
+      invoice_number,
+      invoice_date,
+      purchase_date,
+      total_amount,
+      notes,
+      product_items
     );
     responseHandler(res, null, "Success", 200);
   } catch (err) {
@@ -19,7 +32,7 @@ const addPurchase = async (req, res, next) => {
 const getPurchaseList = async (req, res, next) => {
   try {
     const response = await purchaseService.getPurchaseList();
-    responseHandler(res, null, "Success", 200);
+    responseHandler(res, response.data, "Success", 200);
   } catch (err) {
     next(err);
   }
@@ -36,11 +49,28 @@ const getPurchaseDetails = async (req, res, next) => {
 };
 
 const updatePurchaseDetails = async (req, res, next) => {
-  const {} = req.body;
+  const {
+    supplier_id,
+    invoice_number,
+    invoice_date,
+    purchase_date,
+    total_amount,
+    notes,
+  } = req.body;
+  const user_id = req.user_id;
   const { purchase_id } = req.params;
 
   try {
-    const response = await purchaseService.updatePurchaseDetails(purchase_id);
+    const response = await purchaseService.updatePurchaseDetails(
+      purchase_id,
+      supplier_id,
+      user_id,
+      invoice_number,
+      invoice_date,
+      purchase_date,
+      total_amount,
+      notes
+    );
     responseHandler(res, null, "Success", 200);
   } catch (err) {
     next(err);
