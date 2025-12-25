@@ -10,7 +10,7 @@ const addPurchase = async (
   notes
 ) => {
   const query =
-    "INSERT INTO purchases (supplier_id, updated_by, invoice_number, invoice_date, purchase_dat total_amount, notes) VALUES ($1, $2, $3, $4)";
+    "INSERT INTO purchases (supplier_id, updated_by, invoice_number, invoice_date, purchase_date,  total_amount, notes) VALUES ($1, $2, $3, $4, $5, $6, $7)";
   const values = [
     supplier_id,
     updated_by,

@@ -17,7 +17,7 @@ const signIn = async (mobile_number, password, device_id) => {
         const access_token = generateAccessToken(user.user_id);
         const refresh_token = generateRefreshToken(user.user_id);
         const user_details = {
-          fullname: user.fullname,
+          first_name: user.first_name,
           profile_image_url:
             "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg",
         };
@@ -39,6 +39,7 @@ const signIn = async (mobile_number, password, device_id) => {
     }
     throw new AppError("user not exists");
   } catch (err) {
+    console.log("askljdkljaslkdjaslkd", err);
     if (err instanceof AppError) {
       throw err;
     }

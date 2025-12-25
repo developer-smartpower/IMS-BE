@@ -51,6 +51,50 @@ const getSupplierDetails = async (req, res, next) => {
 
 const updateSupplierDetails = async (req, res, next) => {
   try {
+    const { supplier_id } = req.params;
+    const {
+      email,
+      address,
+      partnership,
+      spoc_name,
+      company_name,
+      mobile_number,
+      landline,
+    } = req.body;
+    const { user_id } = req;
+
+    await supplierService.updateSupplierDetails(
+      supplier_id,
+      email,
+      address,
+      partnership,
+      spoc_name,
+      company_name,
+      mobile_number,
+      landline,
+      user_id
+    );
+    return responseHandler(res, {}, "success", 200);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const deActivateSupplier = async (req, res, next) => {
+  const { supplier_id } = req.params;
+  const { user_id } = req;
+  try {
+    await supplierService.deActivateSupplier(supplier_id, user_id);
+    return responseHandler(res, {}, "Success", 200);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getSupplierLookUp = async (req, res, next) => {
+  try {
+    const response = await supplierService.getSupplierLookUp();
+    responseHandler(res, response, "success", 200);
   } catch (err) {
     next(err);
   }
@@ -61,4 +105,6 @@ module.exports = {
   getSupplierList,
   getSupplierDetails,
   updateSupplierDetails,
+  deActivateSupplier,
+  getSupplierLookUp,
 };

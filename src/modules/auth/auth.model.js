@@ -2,7 +2,7 @@ const db = require("../../config/db");
 
 const checkUserExists = async (mobile_number) => {
   const query =
-    "SELECT user_id, password, fullname FROM users WHERE mobile_number = $1";
+    "SELECT user_id, password, first_name FROM users WHERE mobile_number = $1";
   const values = [mobile_number];
 
   const response = await db.query(query, values);

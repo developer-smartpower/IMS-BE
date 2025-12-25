@@ -70,10 +70,23 @@ const getProductList = async () => {
   }
 };
 
+const getProductLookUp = async () => {
+  try {
+    const response = await productModel.getProductLookUp();
+    return response;
+  } catch (err) {
+    if (err instanceof AppError) {
+      throw err;
+    }
+    throw new AppError("Something went wrong");
+  }
+};
+
 module.exports = {
   addProduct,
   updateProductDetails,
   getProductDetails,
   deleteProduct,
   getProductList,
+  getProductLookUp,
 };

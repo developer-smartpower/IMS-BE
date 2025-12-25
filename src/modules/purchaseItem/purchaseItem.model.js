@@ -4,18 +4,11 @@ const addPurchaseItem = async (
   purchase_id,
   product_id,
   quantity,
-  purchase_price,
-  total_price
+  purchase_price
 ) => {
   const query =
-    "INSERT INTO purchases ( purchase_id, product_id, quantity, purchase_price, total_price) VALUES ($1, $2, $3, $4, $5)";
-  const values = [
-    purchase_id,
-    product_id,
-    quantity,
-    purchase_price,
-    total_price,
-  ];
+    "INSERT INTO purchase_items ( purchase_id, product_id, quantity, purchase_price) VALUES ($1, $2, $3, $4)";
+  const values = [purchase_id, product_id, quantity, purchase_price];
 
   return await db.query(query, values);
 };

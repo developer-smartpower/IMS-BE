@@ -7,7 +7,6 @@ const addPurchase = async (req, res, next) => {
     invoice_number,
     invoice_date,
     purchase_date,
-    total_amount,
     notes,
     product_items,
   } = req.body;
@@ -19,7 +18,6 @@ const addPurchase = async (req, res, next) => {
       invoice_number,
       invoice_date,
       purchase_date,
-      total_amount,
       notes,
       product_items
     );

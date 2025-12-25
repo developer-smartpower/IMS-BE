@@ -47,9 +47,15 @@ const deleteProduct = async (product_id) => {
 
 const getProductList = async () => {
   const query = "SELECT * FROM products";
-  const values = [];
 
-  const response = await db.query(query, values);
+  const response = await db.query(query);
+  return response.rows;
+};
+
+const getProductLookUp = async () => {
+  const query = "SELECT product_id as data, name as label FROM products";
+
+  const response = await db.query(query);
   return response.rows;
 };
 
@@ -59,4 +65,5 @@ module.exports = {
   getProductDetails,
   deleteProduct,
   getProductList,
+  getProductLookUp,
 };

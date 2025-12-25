@@ -1,14 +1,31 @@
 const AppError = require("../../utils/AppError");
 const userManangementModel = require("./userManangement.model");
+const bcrypt = require("bcrypt");
 
-const addUser = async (name, address, mobile_number, user_name, password) => {
+const addUser = async (
+  mobile_number,
+  role,
+  first_name,
+  last_name,
+  email,
+  landline,
+  gender,
+  designation,
+  updated_by
+) => {
+  const hashedPaasword = await bcrypt.hash("123", 10);
   try {
     const response = await userManangementModel.addUser(
-      name,
-      address,
       mobile_number,
-      user_name,
-      password
+      hashedPaasword,
+      role,
+      first_name,
+      last_name,
+      email,
+      landline,
+      gender,
+      designation,
+      updated_by
     );
     return response;
   } catch (err) {
@@ -43,9 +60,31 @@ const viewUserDetails = async (user_id) => {
   }
 };
 
-const updateUser = async (user_id) => {
+const updateUser = async (
+  user_id,
+  mobile_number,
+  role,
+  first_name,
+  last_name,
+  email,
+  landline,
+  gender,
+  designation,
+  created_by
+) => {
   try {
-    const response = await userManangementModel.updateUser(user_id);
+    const response = await userManangementModel.updateUser(
+      user_id,
+      mobile_number,
+      role,
+      first_name,
+      last_name,
+      email,
+      landline,
+      gender,
+      designation,
+      created_by
+    );
     return response;
   } catch (err) {
     if (err instanceof AppError) {

@@ -10,6 +10,7 @@ const addStock = async (product_id, available_quantity, user_id) => {
     );
     return response;
   } catch (err) {
+    console.log("lkhadashdkljsalkdjk", err);
     if (err instanceof AppError) {
       throw err;
     }

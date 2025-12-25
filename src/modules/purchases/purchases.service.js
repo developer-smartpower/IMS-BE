@@ -9,10 +9,10 @@ const addPurchase = async (
   invoice_number,
   invoice_date,
   purchase_date,
-  total_amount,
   notes,
   product_items
 ) => {
+  const total_amount = 1000;
   try {
     await purchaseModel.addPurchase(
       supplier_id,
@@ -25,21 +25,20 @@ const addPurchase = async (
     );
 
     for (const item of product_items) {
-      const { purchase_id, product_id, quantity, purchase_price, total_price } =
-        item;
+      const { purchase_id, product_id, quantity, purchase_price } = item;
       await purchaseItemModel.addPurchaseItem(
         purchase_id,
         product_id,
         quantity,
-        purchase_price,
-        total_price
+        purchase_price
       );
 
-      await stockModel.addStock(product_id, available_quantity, updated_by);
+      await stockModel.addStock(product_id, quantity, updated_by);
     }
 
-    return response;
+    return;
   } catch (err) {
+    console.log("akjshdkjashdkjsa", err);
     if (err instanceof AppError) {
       throw err;
     }

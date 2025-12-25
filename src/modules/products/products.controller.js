@@ -44,7 +44,7 @@ const deleteProduct = async (req, res, next) => {
 
   try {
     const response = await productService.deleteProduct(product_id);
-    responseHandler(res, (data = null), (message = "Success"), (status = 200));
+    responseHandler(res, {}, "success", 200);
   } catch (err) {
     next(err);
   }
@@ -53,12 +53,16 @@ const deleteProduct = async (req, res, next) => {
 const getProductList = async (req, res, next) => {
   try {
     const response = await productService.getProductList();
-    responseHandler(
-      res,
-      (data = response),
-      (message = "Success"),
-      (status = 200)
-    );
+    responseHandler(res, response, "success", 200);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getProductLookUp = async (req, res, next) => {
+  try {
+    const response = await productService.getProductLookUp();
+    responseHandler(res, response, "success", 200);
   } catch (err) {
     next(err);
   }
@@ -70,4 +74,5 @@ module.exports = {
   getProductDetails,
   deleteProduct,
   getProductList,
+  getProductLookUp,
 };
