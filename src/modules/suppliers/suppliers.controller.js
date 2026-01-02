@@ -80,11 +80,11 @@ const updateSupplierDetails = async (req, res, next) => {
   }
 };
 
-const deActivateSupplier = async (req, res, next) => {
+const changeStatus = async (req, res, next) => {
   const { supplier_id } = req.params;
   const { user_id } = req;
   try {
-    await supplierService.deActivateSupplier(supplier_id, user_id);
+    await supplierService.changeStatus(supplier_id, user_id);
     return responseHandler(res, {}, "Success", 200);
   } catch (err) {
     next(err);
@@ -105,6 +105,6 @@ module.exports = {
   getSupplierList,
   getSupplierDetails,
   updateSupplierDetails,
-  deActivateSupplier,
+  changeStatus,
   getSupplierLookUp,
 };

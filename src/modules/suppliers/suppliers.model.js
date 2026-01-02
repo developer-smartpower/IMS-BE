@@ -70,7 +70,7 @@ const updateSupplierDetails = async (
   return results;
 };
 
-const deActivateSupplier = async (supplier_id, status, updated_by) => {
+const changeStatus = async (supplier_id, status, updated_by) => {
   const query =
     "UPDATE suppliers SET status = $2, updated_by = $3  WHERE supplier_id = $1";
   const values = [supplier_id, status, updated_by];
@@ -92,6 +92,6 @@ module.exports = {
   getSupplierList,
   getSupplierDetails,
   updateSupplierDetails,
-  deActivateSupplier,
+  changeStatus,
   getSupplierLookUp,
 };

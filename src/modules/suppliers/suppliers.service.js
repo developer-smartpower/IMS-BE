@@ -87,11 +87,11 @@ const updateSupplierDetails = async (
   }
 };
 
-const deActivateSupplier = async (supplier_id, user_id) => {
+const changeStatus = async (supplier_id, user_id) => {
   try {
-    const status = "deActivate";
+    const status = "ACTIVE";
 
-    const response = await supplierModel.deActivateSupplier(
+    const response = await supplierModel.changeStatus(
       supplier_id,
       status,
       user_id
@@ -122,6 +122,6 @@ module.exports = {
   getSupplierList,
   getSupplierDetails,
   updateSupplierDetails,
-  deActivateSupplier,
+  changeStatus,
   getSupplierLookUp,
 };

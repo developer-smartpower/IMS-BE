@@ -47,9 +47,14 @@ const getProductDetails = async (product_id) => {
     throw new AppError("Something went wrong");
   }
 };
-const deleteProduct = async (product_id) => {
+const updateProductStatus = async (updated_by, product_id) => {
   try {
-    const response = await productModel.deleteProduct(product_id);
+    const status = "ACTIVE";
+    const response = await productModel.updateProductStatus(
+      status,
+      updated_by,
+      product_id
+    );
     return response;
   } catch (err) {
     if (err instanceof AppError) {
@@ -86,7 +91,7 @@ module.exports = {
   addProduct,
   updateProductDetails,
   getProductDetails,
-  deleteProduct,
+  updateProductStatus,
   getProductList,
   getProductLookUp,
 };

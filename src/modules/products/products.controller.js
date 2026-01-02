@@ -39,11 +39,11 @@ const getProductDetails = async (req, res, next) => {
   }
 };
 
-const deleteProduct = async (req, res, next) => {
+const updateProductStatus = async (req, res, next) => {
   const { product_id } = req.params;
 
   try {
-    const response = await productService.deleteProduct(product_id);
+    const response = await productService.updateProductStatus(product_id);
     responseHandler(res, {}, "success", 200);
   } catch (err) {
     next(err);
@@ -72,7 +72,7 @@ module.exports = {
   addProduct,
   updateProductDetails,
   getProductDetails,
-  deleteProduct,
+  updateProductStatus,
   getProductList,
   getProductLookUp,
 };

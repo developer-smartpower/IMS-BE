@@ -37,9 +37,10 @@ const getProductDetails = async (product_id) => {
   return response.rows[0];
 };
 
-const deleteProduct = async (product_id) => {
-  const query = "DELETE FROM products WHERE product_id = $1";
-  const values = [product_id];
+const updateProductStatus = async (status, updated_by, product_id) => {
+  const query =
+    "UPDATE products SET status = $1, updated_by = $2 WHERE product_id = $3";
+  const values = [status, updated_by, product_id];
 
   const response = await db.query(query, values);
   return response;
@@ -63,7 +64,7 @@ module.exports = {
   addProduct,
   updateProductDetails,
   getProductDetails,
-  deleteProduct,
+  updateProductStatus,
   getProductList,
   getProductLookUp,
 };

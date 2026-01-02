@@ -22,7 +22,7 @@ router.put(
 router.patch(
   "/:supplier_id",
   validateToken,
-  supplierController.deActivateSupplier
+  supplierController.changeStatus
 );
 
 module.exports = router;
