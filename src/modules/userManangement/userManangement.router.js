@@ -1,16 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const userManangementController = require("./userManangement.controller");
 const validateToken = require("../../middlewares/validateToken");
+const userManagementController = require("./userManangement.controller");
 
-router.post("/", validateToken, userManangementController.addUser);
-router.get("/", validateToken, userManangementController.getUserList);
-router.get(
-  "/:user_id",
-  validateToken,
-  userManangementController.viewUserDetails
-);
-router.put("/:user_id", validateToken, userManangementController.updateUser);
+// CREATE
+router.post("/", validateToken, userManagementController.addUser);
+router.get("/", validateToken, userManagementController.getUserList);
+router.get("/:user_id", validateToken, userManagementController.getUserDetails);
+router.put("/:user_id", validateToken, userManagementController.updateUser);
 
 module.exports = router;

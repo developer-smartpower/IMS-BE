@@ -2,75 +2,71 @@ const AppError = require("../../utils/AppError");
 const productModel = require("./products.model");
 
 const addProduct = async (
+  product_name,
+  code_name,
   description,
-  name,
   manufacturer,
   supplier_id,
-  code_name,
+  status,
   updated_by
 ) => {
   try {
-    const response = await productModel.addProduct(
+    return await productModel.addProduct(
+      product_name,
+      code_name,
       description,
-      name,
       manufacturer,
       supplier_id,
-      code_name,
+      status,
       updated_by
     );
-    return response;
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError("Something went wrong");
   }
 };
 
-const updateProductDetails = async () => {
+const updateProductDetails = async (
+  product_id,
+  product_name,
+  code_name,
+  description,
+  manufacturer,
+  supplier_id,
+  status,
+  user_id
+) => {
   try {
+    return await productModel.updateProductDetails(
+      product_id,
+      product_name,
+      code_name,
+      description,
+      manufacturer,
+      supplier_id,
+      status,
+      user_id
+    );
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError("Something went wrong");
   }
 };
+
 const getProductDetails = async (product_id) => {
   try {
-    const response = await productModel.getProductDetails(product_id);
-    return response;
+    return await productModel.getProductDetails(product_id);
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError("Something went wrong");
   }
 };
-const updateProductStatus = async (updated_by, product_id) => {
-  try {
-    const status = "ACTIVE";
-    const response = await productModel.updateProductStatus(
-      status,
-      updated_by,
-      product_id
-    );
-    return response;
-  } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
-    throw new AppError("Something went wrong");
-  }
-};
+
 const getProductList = async () => {
   try {
-    const response = await productModel.getProductList();
-    return response;
+    return await productModel.getProductList();
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError("Something went wrong");
   }
 };
@@ -80,9 +76,8 @@ const getProductLookUp = async () => {
     const response = await productModel.getProductLookUp();
     return response;
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    console.log("lakhdasjdlkajsldkjasd", err);
+    if (err instanceof AppError) throw err;
     throw new AppError("Something went wrong");
   }
 };
@@ -91,7 +86,6 @@ module.exports = {
   addProduct,
   updateProductDetails,
   getProductDetails,
-  updateProductStatus,
   getProductList,
   getProductLookUp,
 };

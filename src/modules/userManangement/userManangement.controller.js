@@ -1,6 +1,7 @@
 const responseHandler = require("../../utils/ResponseHandler");
-const userManangementService = require("./userManangement.service");
+const userManagementService = require("./userManangement.service");
 
+// CREATE
 const addUser = async (req, res, next) => {
   try {
     const {
@@ -12,9 +13,12 @@ const addUser = async (req, res, next) => {
       landline,
       gender,
       designation,
+      status,
     } = req.body;
-    const user_id = req.user_id;
-    await userManangementService.addUser(
+
+    const created_by = req.user_id;
+
+    await userManagementService.addUser(
       mobile_number,
       role,
       first_name,
@@ -23,37 +27,41 @@ const addUser = async (req, res, next) => {
       landline,
       gender,
       designation,
-      user_id
+      status,
+      created_by
     );
+
     responseHandler(res, {}, "success", 201);
   } catch (err) {
     next(err);
   }
 };
 
+// READ (LIST)
 const getUserList = async (req, res, next) => {
   try {
-    const response = await userManangementService.getUserList();
-    responseHandler(res, response, "sucess", 200);
-  } catch (err) {
-    next(err);
-  }
-};
-
-const viewUserDetails = async (req, res, next) => {
-  try {
-    const { user_id } = req.params;
-    const response = await userManangementService.viewUserDetails(user_id);
+    const response = await userManagementService.getUserList();
     responseHandler(res, response, "success", 200);
   } catch (err) {
     next(err);
   }
 };
 
+// READ (DETAILS)
+const getUserDetails = async (req, res, next) => {
+  try {
+    const { user_id } = req.params;
+    const response = await userManagementService.getUserDetails(user_id);
+    responseHandler(res, response, "success", 200);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// UPDATE
 const updateUser = async (req, res, next) => {
   try {
     const { user_id } = req.params;
-    const created_by = req.user_id;
     const {
       mobile_number,
       role,
@@ -63,9 +71,13 @@ const updateUser = async (req, res, next) => {
       landline,
       gender,
       designation,
+      status,
     } = req.body;
+    const updated_by = req.user_id;
 
-    await userManangementService.updateUser(
+console.log('alksjdlkasjdlksadjkaslkd', user_id)
+    
+    await userManagementService.updateUser(
       user_id,
       mobile_number,
       role,
@@ -75,9 +87,11 @@ const updateUser = async (req, res, next) => {
       landline,
       gender,
       designation,
-      created_by
+      status,
+      updated_by
     );
-    responseHandler(res, {}, "sucess", 200);
+
+    responseHandler(res, {}, "success", 200);
   } catch (err) {
     next(err);
   }
@@ -86,6 +100,6 @@ const updateUser = async (req, res, next) => {
 module.exports = {
   addUser,
   getUserList,
-  viewUserDetails,
+  getUserDetails,
   updateUser,
 };

@@ -2,16 +2,25 @@ const responseHandler = require("../../utils/ResponseHandler");
 const productService = require("./products.service");
 
 const addProduct = async (req, res, next) => {
-  const { description, name, manufacturer, supplier_id, code_name } = req.body;
+  const {
+    product_name,
+    code_name,
+    description,
+    manufacturer,
+    supplier_id,
+    status,
+  } = req.body;
+
   const user_id = req.user_id;
 
   try {
     await productService.addProduct(
+      product_name,
+      code_name,
       description,
-      name,
       manufacturer,
       supplier_id,
-      code_name,
+      status,
       user_id
     );
 
@@ -22,7 +31,28 @@ const addProduct = async (req, res, next) => {
 };
 
 const updateProductDetails = async (req, res, next) => {
+  const { product_id } = req.params;
+  const {
+    product_name,
+    code_name,
+    description,
+    manufacturer,
+    supplier_id,
+    status,
+  } = req.body;
+  const { user_id } = req;
   try {
+    await productService.updateProductDetails(
+      product_id,
+      product_name,
+      code_name,
+      description,
+      manufacturer,
+      supplier_id,
+      status,
+      user_id
+    );
+    responseHandler(res, {}, "success", 200);
   } catch (err) {
     next(err);
   }
@@ -39,21 +69,10 @@ const getProductDetails = async (req, res, next) => {
   }
 };
 
-const updateProductStatus = async (req, res, next) => {
-  const { product_id } = req.params;
-
-  try {
-    const response = await productService.updateProductStatus(product_id);
-    responseHandler(res, {}, "success", 200);
-  } catch (err) {
-    next(err);
-  }
-};
-
 const getProductList = async (req, res, next) => {
   try {
     const response = await productService.getProductList();
-    responseHandler(res, response, "success", 200);
+    responseHandler(res, response, "Success", 200);
   } catch (err) {
     next(err);
   }
@@ -62,7 +81,7 @@ const getProductList = async (req, res, next) => {
 const getProductLookUp = async (req, res, next) => {
   try {
     const response = await productService.getProductLookUp();
-    responseHandler(res, response, "success", 200);
+    responseHandler(res, response, "Success", 200);
   } catch (err) {
     next(err);
   }
@@ -72,7 +91,6 @@ module.exports = {
   addProduct,
   updateProductDetails,
   getProductDetails,
-  updateProductStatus,
   getProductList,
   getProductLookUp,
 };

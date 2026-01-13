@@ -1,52 +1,60 @@
 const responseHandler = require("../../utils/ResponseHandler");
 const stockService = require("./stock.service");
 
+// CREATE
 const addStock = async (req, res, next) => {
   try {
     const { product_id, available_quantity } = req.body;
-    const user_id = req.user_id;
+    const { user_id } = req;
+
     await stockService.addStock(product_id, available_quantity, user_id);
-    responseHandler(res, {}, "sucess", 200);
+    responseHandler(res, {}, "success", 200);
   } catch (err) {
     next(err);
   }
 };
 
+// READ (LIST)
 const getStockList = async (req, res, next) => {
   try {
-    const {} = req.body;
     const response = await stockService.getStockList();
-    responseHandler(res, response, "sucess", 200);
-  } catch (err) {
-    next(err);
-  }
-};
-
-const viewStockDetails = async (req, res, next) => {
-  try {
-    const { stock_id } = req.params;
-    const response = await stockService.viewStockDetails(stock_id);
     responseHandler(res, response, "success", 200);
   } catch (err) {
     next(err);
   }
 };
 
-const deleteStock = async (req, res, next) => {
+// READ (DETAILS)
+const getStockDetails = async (req, res, next) => {
   try {
     const { stock_id } = req.params;
-    const response = await stockService.deleteStock(stock_id);
-    responseHandler(res, {}, "sucess", 200);
+    const response = await stockService.getStockDetails(stock_id);
+    responseHandler(res, response, "success", 200);
   } catch (err) {
     next(err);
   }
 };
 
+// UPDATE
 const updateStock = async (req, res, next) => {
   try {
     const { stock_id } = req.params;
-    const response = await stockService.updateStock(stock_id);
-    responseHandler(res, {}, "sucess", 200);
+    const { available_quantity } = req.body;
+    const user_id = req.user_id;
+
+    await stockService.updateStock(stock_id, available_quantity, user_id);
+    responseHandler(res, {}, "success", 200);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// DELETE
+const deleteStock = async (req, res, next) => {
+  try {
+    const { stock_id } = req.params;
+    await stockService.deleteStock(stock_id);
+    responseHandler(res, {}, "success", 200);
   } catch (err) {
     next(err);
   }
@@ -55,7 +63,7 @@ const updateStock = async (req, res, next) => {
 module.exports = {
   addStock,
   getStockList,
-  viewStockDetails,
-  deleteStock,
+  getStockDetails,
   updateStock,
+  deleteStock,
 };

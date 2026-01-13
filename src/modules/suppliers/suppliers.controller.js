@@ -3,27 +3,31 @@ const supplierService = require("./suppliers.service");
 
 const addSupplier = async (req, res, next) => {
   const {
-    email,
-    address,
-    partnership,
-    spoc_name,
     company_name,
+    partnership,
+    address,
+    spoc_name,
+    email,
     mobile_number,
     landline,
+    status,
   } = req.body;
+
   const user_id = req.user_id;
 
   try {
     await supplierService.addSupplier(
-      email,
-      address,
-      partnership,
-      spoc_name,
       company_name,
+      partnership,
+      address,
+      spoc_name,
+      email,
       mobile_number,
       landline,
+      status,
       user_id
     );
+
     responseHandler(res, {}, "Success", 200);
   } catch (err) {
     next(err);
@@ -41,6 +45,7 @@ const getSupplierList = async (req, res, next) => {
 
 const getSupplierDetails = async (req, res, next) => {
   const { supplier_id } = req.params;
+
   try {
     const response = await supplierService.getSupplierDetails(supplier_id);
     responseHandler(res, response, "Success", 200);
@@ -50,42 +55,38 @@ const getSupplierDetails = async (req, res, next) => {
 };
 
 const updateSupplierDetails = async (req, res, next) => {
-  try {
-    const { supplier_id } = req.params;
-    const {
-      email,
-      address,
-      partnership,
-      spoc_name,
-      company_name,
-      mobile_number,
-      landline,
-    } = req.body;
-    const { user_id } = req;
+  const { supplier_id } = req.params;
 
+  const {
+    company_name,
+    partnership,
+    address,
+    spoc_name,
+    email,
+    mobile_number,
+    landline,
+    status,
+  } = req.body;
+
+
+
+  const { user_id } = req;
+
+  try {
     await supplierService.updateSupplierDetails(
       supplier_id,
-      email,
-      address,
-      partnership,
-      spoc_name,
       company_name,
+      partnership,
+      address,
+      spoc_name,
+      email,
       mobile_number,
       landline,
+      status,
       user_id
     );
-    return responseHandler(res, {}, "success", 200);
-  } catch (err) {
-    next(err);
-  }
-};
 
-const changeStatus = async (req, res, next) => {
-  const { supplier_id } = req.params;
-  const { user_id } = req;
-  try {
-    await supplierService.changeStatus(supplier_id, user_id);
-    return responseHandler(res, {}, "Success", 200);
+    responseHandler(res, {}, "Success", 200);
   } catch (err) {
     next(err);
   }
@@ -94,7 +95,7 @@ const changeStatus = async (req, res, next) => {
 const getSupplierLookUp = async (req, res, next) => {
   try {
     const response = await supplierService.getSupplierLookUp();
-    responseHandler(res, response, "success", 200);
+    responseHandler(res, response, "Success", 200);
   } catch (err) {
     next(err);
   }
@@ -105,6 +106,5 @@ module.exports = {
   getSupplierList,
   getSupplierDetails,
   updateSupplierDetails,
-  changeStatus,
   getSupplierLookUp,
 };

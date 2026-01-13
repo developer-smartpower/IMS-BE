@@ -1,67 +1,52 @@
 const AppError = require("../../utils/AppError");
 const stockModel = require("./stock.model");
 
+// CREATE
 const addStock = async (product_id, available_quantity, user_id) => {
   try {
-    const response = await stockModel.addStock(
-      product_id,
-      available_quantity,
-      user_id
-    );
-    return response;
+    return await stockModel.addStock(product_id, available_quantity, user_id);
   } catch (err) {
-    console.log("lkhadashdkljsalkdjk", err);
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError();
   }
 };
 
+// READ (LIST)
 const getStockList = async () => {
   try {
-    const response = await stockModel.getStockList();
-    return response;
+    return await stockModel.getStockList();
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError();
   }
 };
 
-const viewStockDetails = async (stock_id) => {
+// READ (DETAILS)
+const getStockDetails = async (stock_id) => {
   try {
-    const response = await stockModel.viewStockDetails(stock_id);
-    return response;
+    return await stockModel.getStockDetails(stock_id);
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError();
   }
 };
 
+// UPDATE
+const updateStock = async (stock_id, available_quantity, user_id) => {
+  try {
+    return await stockModel.updateStock(stock_id, available_quantity, user_id);
+  } catch (err) {
+    if (err instanceof AppError) throw err;
+    throw new AppError();
+  }
+};
+
+// DELETE
 const deleteStock = async (stock_id) => {
   try {
-    const response = await stockModel.deleteStock(stock_id);
-    return response;
+    return await stockModel.deleteStock(stock_id);
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
-    throw new AppError();
-  }
-};
-
-const updateStock = async (stock_id) => {
-  try {
-    const response = await stockModel.updateStock(stock_id);
-    return response;
-  } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError();
   }
 };
@@ -69,7 +54,7 @@ const updateStock = async (stock_id) => {
 module.exports = {
   addStock,
   getStockList,
-  viewStockDetails,
-  deleteStock,
+  getStockDetails,
   updateStock,
+  deleteStock,
 };

@@ -2,117 +2,89 @@ const AppError = require("../../utils/AppError");
 const supplierModel = require("./suppliers.model");
 
 const addSupplier = async (
-  email,
-  address,
-  partnership,
-  spoc_name,
   company_name,
+  partnership,
+  address,
+  spoc_name,
+  email,
   mobile_number,
   landline,
+  status,
   updated_by
 ) => {
   try {
-    const response = await supplierModel.addSupplier(
-      email,
-      address,
-      partnership,
-      spoc_name,
+    return await supplierModel.addSupplier(
       company_name,
+      partnership,
+      address,
+      spoc_name,
+      email,
       mobile_number,
       landline,
+      status,
       updated_by
     );
-    return response;
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    console.log("aslkjksjdlaksjdlkas", err);
+    if (err instanceof AppError) throw err;
     throw new AppError("Something went wrong");
   }
 };
 
 const getSupplierList = async () => {
   try {
-    const response = await supplierModel.getSupplierList();
-    return response;
+    return await supplierModel.getSupplierList();
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError("Something went wrong");
   }
 };
 
 const getSupplierDetails = async (supplier_id) => {
   try {
-    const response = await supplierModel.getSupplierDetails(supplier_id);
-    return response;
+    return await supplierModel.getSupplierDetails(supplier_id);
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError("Something went wrong");
   }
 };
 
 const updateSupplierDetails = async (
   supplier_id,
-  email,
-  address,
-  partnership,
-  spoc_name,
   company_name,
+  partnership,
+  address,
+  spoc_name,
+  email,
   mobile_number,
   landline,
+  status,
   updated_by
 ) => {
   try {
-    const response = await supplierModel.updateSupplierDetails(
+    return await supplierModel.updateSupplierDetails(
       supplier_id,
-      email,
-      address,
-      partnership,
-      spoc_name,
       company_name,
+      partnership,
+      address,
+      spoc_name,
+      email,
       mobile_number,
       landline,
+      status,
       updated_by
     );
-    return response;
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
-    throw new AppError("Something went wrong");
-  }
-};
-
-const changeStatus = async (supplier_id, user_id) => {
-  try {
-    const status = "ACTIVE";
-
-    const response = await supplierModel.changeStatus(
-      supplier_id,
-      status,
-      user_id
-    );
-    return response;
-  } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError("Something went wrong");
   }
 };
 
 const getSupplierLookUp = async () => {
   try {
-    const response = await supplierModel.getSupplierLookUp();
-    return response;
+    return await supplierModel.getSupplierLookUp();
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError("Something went wrong");
   }
 };
@@ -122,6 +94,5 @@ module.exports = {
   getSupplierList,
   getSupplierDetails,
   updateSupplierDetails,
-  changeStatus,
   getSupplierLookUp,
 };

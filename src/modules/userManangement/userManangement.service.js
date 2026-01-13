@@ -1,7 +1,8 @@
 const AppError = require("../../utils/AppError");
-const userManangementModel = require("./userManangement.model");
+const userManagementModel = require("./userManangement.model");
 const bcrypt = require("bcrypt");
 
+// CREATE
 const addUser = async (
   mobile_number,
   role,
@@ -11,13 +12,15 @@ const addUser = async (
   landline,
   gender,
   designation,
-  updated_by
+  status,
+  created_by
 ) => {
-  const hashedPaasword = await bcrypt.hash("123", 10);
   try {
-    const response = await userManangementModel.addUser(
+    const hashedPassword = await bcrypt.hash("123", 10);
+
+    return await userManagementModel.addUser(
       mobile_number,
-      hashedPaasword,
+      hashedPassword,
       role,
       first_name,
       last_name,
@@ -25,41 +28,36 @@ const addUser = async (
       landline,
       gender,
       designation,
-      updated_by
+      status,
+      created_by
     );
-    return response;
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError();
   }
 };
 
+// READ (LIST)
 const getUserList = async () => {
   try {
-    const response = await userManangementModel.getUserList();
-    return response;
+    return await userManagementModel.getUserList();
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError();
   }
 };
 
-const viewUserDetails = async (user_id) => {
+// READ (DETAILS)
+const getUserDetails = async (user_id) => {
   try {
-    const response = await userManangementModel.viewUserDetails(user_id);
-    return response;
+    return await userManagementModel.getUserDetails(user_id);
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError();
   }
 };
 
+// UPDATE
 const updateUser = async (
   user_id,
   mobile_number,
@@ -70,10 +68,11 @@ const updateUser = async (
   landline,
   gender,
   designation,
-  created_by
+  status,
+  updated_by
 ) => {
   try {
-    const response = await userManangementModel.updateUser(
+    return await userManagementModel.updateUser(
       user_id,
       mobile_number,
       role,
@@ -83,13 +82,12 @@ const updateUser = async (
       landline,
       gender,
       designation,
-      created_by
+      status,
+      updated_by
     );
-    return response;
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    console.log("alskjkalsdjklasjd", err);
+    if (err instanceof AppError) throw err;
     throw new AppError();
   }
 };
@@ -97,6 +95,6 @@ const updateUser = async (
 module.exports = {
   addUser,
   getUserList,
-  viewUserDetails,
+  getUserDetails,
   updateUser,
 };

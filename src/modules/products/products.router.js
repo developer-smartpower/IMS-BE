@@ -6,18 +6,14 @@ const validateToken = require("../../middlewares/validateToken");
 
 router.post("/", validateToken, productController.addProduct);
 
+// lookup (static must come before :id)
 router.get("/lookup", validateToken, productController.getProductLookUp);
-router.get("/:product_id", validateToken, productController.getProductDetails);
 router.get("/", validateToken, productController.getProductList);
+router.get("/:product_id", validateToken, productController.getProductDetails);
 router.put(
   "/:product_id",
   validateToken,
   productController.updateProductDetails
-);
-router.patch(
-  "/:product_id",
-  validateToken,
-  productController.updateProductStatus
 );
 
 module.exports = router;
