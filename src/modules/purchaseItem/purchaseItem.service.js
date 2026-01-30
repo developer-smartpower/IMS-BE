@@ -6,45 +6,48 @@ const addPurchaseItem = async (
   product_id,
   quantity,
   purchase_price,
-  total_price // calculate this
+  updated_by
 ) => {
   try {
-    const response = await purchaseItemModel.addPurchaseItem(
+    return await purchaseItemModel.addPurchaseItem(
       purchase_id,
       product_id,
       quantity,
       purchase_price,
-      total_price
+      updated_by
     );
-    return response;
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError();
   }
 };
 
-const updatePurchaseItemDetails = async () => {
+const updatePurchaseItemDetails = async (
+  purchase_item_id,
+  product_id,
+  quantity,
+  purchase_price,
+  updated_by
+) => {
   try {
-    const response = await purchaseItemModel.updatePurchaseItemDetails();
-    return response;
+    return await purchaseItemModel.updatePurchaseItemDetails(
+      purchase_item_id,
+      product_id,
+      quantity,
+      purchase_price,
+      updated_by
+    );
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError();
   }
 };
 
-const deletePurchaseItem = async (purchaseItem_id) => {
+const deletePurchaseItem = async (purchase_item_id) => {
   try {
-    const response = await purchaseItemModel.deletePurchaseItem(purchaseItem_id);
-    return response;
+    return await purchaseItemModel.deletePurchaseItem(purchase_item_id);
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError();
   }
 };

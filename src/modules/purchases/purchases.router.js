@@ -5,7 +5,7 @@ const purchaseController = require("./purchases.controller");
 const validateToken = require("../../middlewares/validateToken");
 
 router.post("/", validateToken, purchaseController.addPurchase);
-router.post("/", validateToken, purchaseController.getPurchaseList);
+router.get("/", validateToken, purchaseController.getPurchaseList);
 router.get(
   "/:purchase_id",
   validateToken,

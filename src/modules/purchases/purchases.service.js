@@ -5,67 +5,62 @@ const purchaseModel = require("./purchases.model");
 
 const addPurchase = async (
   supplier_id,
-  updated_by,
   invoice_number,
   invoice_date,
   purchase_date,
   notes,
-  product_items
+  product_items,
+  updated_by
 ) => {
-  const total_amount = 1000;
   try {
-    await purchaseModel.addPurchase(
+    let total_amount = 1000; // TODO: calculate dynamically
+
+    const purchaseResult = await purchaseModel.addPurchase(
       supplier_id,
-      updated_by,
       invoice_number,
       invoice_date,
       purchase_date,
       total_amount,
-      notes
+      notes,
+      updated_by
     );
 
+    const purchase_id = purchaseResult.purchase_id;
+
     for (const item of product_items) {
-      const { purchase_id, product_id, quantity, purchase_price } = item;
+      const { product_id, quantity, purchase_price } = item;
+
       await purchaseItemModel.addPurchaseItem(
         purchase_id,
         product_id,
         quantity,
-        purchase_price
+        purchase_price,
+        updated_by
       );
 
       await stockModel.addStock(product_id, quantity, updated_by);
+      return;
     }
-
-    return;
   } catch (err) {
-    console.log("akjshdkjashdkjsa", err);
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError();
   }
 };
 
 const getPurchaseList = async () => {
   try {
-    const response = await purchaseModel.getPurchaseList();
-    return response;
+    return await purchaseModel.getPurchaseList();
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError();
   }
 };
 
 const getPurchaseDetails = async (purchase_id) => {
   try {
-    const response = await purchaseModel.getPurchaseDetails(purchase_id);
-    return response;
+    return await purchaseModel.getPurchaseDetails(purchase_id);
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError();
   }
 };
@@ -73,36 +68,33 @@ const getPurchaseDetails = async (purchase_id) => {
 const updatePurchaseDetails = async (
   purchase_id,
   supplier_id,
-  user_id,
   invoice_number,
   invoice_date,
   purchase_date,
   total_amount,
-  notes
+  notes,
+  user_id
 ) => {
   try {
-    const response = await purchaseModel.updatePurchaseDetails(
+    return await purchaseModel.updatePurchaseDetails(
       purchase_id,
       supplier_id,
-      user_id,
       invoice_number,
       invoice_date,
       purchase_date,
       total_amount,
-      notes
+      notes,
+      user_id
     );
-    return response;
   } catch (err) {
-    if (err instanceof AppError) {
-      throw err;
-    }
+    if (err instanceof AppError) throw err;
     throw new AppError();
   }
 };
 
 module.exports = {
   addPurchase,
+  getPurchaseList,
   getPurchaseDetails,
   updatePurchaseDetails,
-  getPurchaseList,
 };
